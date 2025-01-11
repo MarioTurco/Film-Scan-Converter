@@ -9,7 +9,7 @@ import os
 import sys
 import matplotlib.colors
 import logging 
-
+import sv_ttk
 #Custom classes
 from GUI import GUI
 
@@ -46,4 +46,5 @@ if __name__ == '__main__':
         root.iconbitmap(default=resource_path(datafile))
 
     window = GUI(root)
+    sv_ttk.set_theme('Light')
     root.mainloop()

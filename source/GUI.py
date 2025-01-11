@@ -10,6 +10,8 @@ import numpy as np
 import cv2
 import multiprocessing
 
+import sv_ttk
+
 #custom classes
 from ScrollFrame import ScrollFrame
 from RawProcessing import RawProcessing
@@ -87,6 +89,12 @@ class GUI:
         self.editmenu.add_separator()
         self.editmenu.add_cascade(label='Advanced Settings...', command=self.advanced_dialog)
         menubar.add_cascade(label='Edit', menu=self.editmenu)
+        self.thememenu = tk.Menu(menubar, tearoff=0)
+        menubar.add_cascade(label='Theme', menu=self.thememenu)
+        self.thememenu.add_command(label='Light Theme', command=sv_ttk.set_theme('Light'))
+        #self.thememenu.add_cascade(label='Light Theme', command=sv_ttk.set_theme('Light'))
+        self.thememenu.add_separator()
+        self.thememenu.add_command(label='Dark Theme', command=sv_ttk.set_theme('Dark'))
         self.master.config(menu=menubar)
 
         mainFrame = ttk.Frame(self.master, padding=10)
@@ -97,7 +105,7 @@ class GUI:
         self.controlsFrame = ttk.Frame(mainFrame)
         self.controlsFrame.grid(row=0, column=0, sticky='NS', rowspan=10)
         self.controlsFrame.grid_rowconfigure(0, weight=1)
-        self.controlsFrame.grid_columnconfigure(0, weight=1)
+        self.controlsFrame.grid_columnconfigure(1, weight=1)
         dynamic_scroll_frame = ScrollFrame(self.controlsFrame)
 
         # Importing RAW scans
@@ -356,9 +364,9 @@ class GUI:
         destination_lbl.bind('<Configure>', lambda e: destination_lbl.config(wraplength=destination_lbl.winfo_width()))
         ttk.Button(export_frame, text='Select Folder', command=self.select_folder).pack(side=tk.LEFT, padx=2, pady=5)
         self.current_photo_button = ttk.Button(export_frame, text='Export Current Photo', command=self.export, state=tk.DISABLED)
-        self.current_photo_button.pack(side=tk.LEFT, padx=2, pady=5)
+        self.current_photo_button.pack(side=tk.BOTTOM, padx=2, pady=5)
         self.all_photo_button = ttk.Button(export_frame, text='Export All Photos', command=lambda: self.export(len(self.photos)), state=tk.DISABLED)
-        self.all_photo_button.pack(side=tk.LEFT, padx=2, pady=5)
+        self.all_photo_button.pack(side=tk.BOTTOM, padx=2, pady=5)
         self.abort_button = ttk.Button(export_frame, text='Abort Export', command=self.abort)
 
         # Progress Bar
